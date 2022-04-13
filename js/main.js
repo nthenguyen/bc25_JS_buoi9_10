@@ -21,18 +21,16 @@ const clearMessage = () => {
 };
 
 getEle("btnThem").addEventListener("click", function () {
-  closeModalByButtonEdit();
+  closeModal();
   clearMessage();
 });
 
-//close Modal cua button Them Nguoi Dung
-const closeModalByButtonAdd = () => {
+const closeModalAfterAdd = () => {
   getEle("btnDong").click();
   clearFields();
 };
 
-//close Modal cua button Sua
-const closeModalByButtonEdit = () => {
+const closeModal = () => {
   var modal = getEle("myModal");
   window.onclick = (event) => {
     if (event.target == modal) {
@@ -48,7 +46,7 @@ getEle("btnThemNV").addEventListener("click", function () {
     dsnv.addNV(nhanvien);
     taoBang(dsnv.arr);
     setLocalStorage();
-    closeModalByButtonAdd();
+    closeModalAfterAdd();
   }
 });
 
@@ -199,7 +197,7 @@ function editNV(taiKhoan) {
   getEle("chucvu").value = nv.chucVu;
   getEle("gioLam").value = nv.gioLam;
   clearMessage();
-  closeModalByButtonEdit();
+  closeModal();
 }
 
 getEle("btnCapNhat").addEventListener("click", function () {

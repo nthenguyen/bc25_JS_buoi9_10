@@ -1,5 +1,3 @@
-var dsnv = new DSNV();
-
 function Validation() {
   this.ktraRong = function (value, spanId, message) {
     if (value.trim() === "") {
@@ -130,6 +128,7 @@ function Validation() {
         break;
       }
     }
+
     if (status) {
       //k hop le
       getEle(spanId).innerHTML = message;
@@ -150,6 +149,7 @@ function Validation() {
         break;
       }
     }
+
     if (status) {
       //k hop le
       getEle(spanId).innerHTML = message;
