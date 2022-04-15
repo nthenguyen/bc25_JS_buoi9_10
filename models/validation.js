@@ -128,7 +128,6 @@ function Validation() {
         break;
       }
     }
-
     if (status) {
       //k hop le
       getEle(spanId).innerHTML = message;
@@ -149,7 +148,6 @@ function Validation() {
         break;
       }
     }
-
     if (status) {
       //k hop le
       getEle(spanId).innerHTML = message;

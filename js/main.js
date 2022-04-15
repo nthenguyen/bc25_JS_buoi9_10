@@ -25,7 +25,7 @@ getEle("btnThem").addEventListener("click", function () {
   clearMessage();
 });
 
-const closeModalAfterAdd = () => {
+const closeModalAfterClickBtn = () => {
   getEle("btnDong").click();
   clearFields();
 };
@@ -42,11 +42,36 @@ const closeModal = () => {
 
 getEle("btnThemNV").addEventListener("click", function () {
   var nhanvien = layThongTinNV();
-  if (nhanvien) {
+  var _tk = getEle("tknv").value;
+  var _email = getEle("email").value;
+  var isValid = true;
+  //Tai Khoan
+  isValid &=
+    validation.ktraRong(_tk, "tbTKNV", "Tài khoản không được để trống") &&
+    validation.kiemTraChuoiKiSo(_tk, "tbTKNV", "Tài khoản phải là số") &&
+    validation.kiemTraDoDaiKiTu(_tk, "tbTKNV", "Tài khoản từ 4 - 6 số", 4, 6) &&
+    validation.kiemTraTrungTaiKhoan(
+      _tk,
+      "tbTKNV",
+      "Tài khoản đã tồn tại",
+      dsnv.arr
+    );
+  //Email
+  isValid &=
+    validation.ktraRong(_email, "tbEmail", "Email không được để trống") &&
+    validation.kiemTraEmail(_email, "tbEmail", "Email không đúng định dạng") &&
+    validation.kiemTraTrungEmail(
+      _email,
+      "tbEmail",
+      "Email đã tồn tại",
+      dsnv.arr
+    );
+
+  if (nhanvien && isValid) {
     dsnv.addNV(nhanvien);
     taoBang(dsnv.arr);
     setLocalStorage();
-    closeModalAfterAdd();
+    closeModalAfterClickBtn();
   }
 });
 
@@ -61,33 +86,10 @@ function layThongTinNV() {
   var _gioLam = getEle("gioLam").value;
 
   var isValid = true;
-  //Tai Khoan
-  isValid &=
-    validation.ktraRong(_tk, "tbTKNV", "Tài khoản không được để trống") &&
-    validation.kiemTraChuoiKiSo(_tk, "tbTKNV", "Tài khoản phải là số") &&
-    validation.kiemTraDoDaiKiTu(_tk, "tbTKNV", "Tài khoản từ 4 - 6 số", 4, 6) &&
-    validation.kiemTraTrungTaiKhoan(
-      _tk,
-      "tbTKNV",
-      "Tài khoản đã tồn tại",
-      dsnv.arr
-    );
-
   //Ho Ten
   isValid &=
     validation.ktraRong(_hoTen, "tbTen", "Họ tên không được để trống") &&
     validation.kiemTraChuoiKiTu(_hoTen, "tbTen", "Họ tên phải là kí tự");
-
-  //Email
-  isValid &=
-    validation.ktraRong(_email, "tbEmail", "Email không được để trống") &&
-    validation.kiemTraEmail(_email, "tbEmail", "Email không đúng định dạng") &&
-    validation.kiemTraTrungEmail(
-      _email,
-      "tbEmail",
-      "Email đã tồn tại",
-      dsnv.arr
-    );
 
   //Mat Khau
   isValid &=
@@ -188,6 +190,7 @@ function deleteNV(taikhoan) {
 function editNV(taiKhoan) {
   var nv = dsnv.editNV(taiKhoan);
   getEle("tknv").disabled = true;
+  getEle("email").disabled = true;
   getEle("tknv").value = nv.taiKhoan;
   getEle("name").value = nv.hoTen;
   getEle("email").value = nv.email;
@@ -206,6 +209,7 @@ getEle("btnCapNhat").addEventListener("click", function () {
     dsnv.updateNV(nhanvien);
     taoBang(dsnv.arr);
     setLocalStorage();
+    closeModalAfterClickBtn();
   }
 });
 
